@@ -18,7 +18,7 @@ def get_pomodoro_stats(pomodoro_operations: PomodoroOperationsDep):
     for pomodoro in pomodoro_operations.storage:
         if pomodoro.completed:
             completed_count += 1
-            time += int((pomodoro.end_time - pomodoro.start_time).total_seconds() / 60)
+            time += round((pomodoro.end_time - pomodoro.start_time).total_seconds() / 60, 2)
     return {"completed":completed_count, "time":time}
 
 

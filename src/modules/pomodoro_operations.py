@@ -4,7 +4,7 @@ from fastapi import Depends
 from datetime import datetime
 
 from src.common.models import Pomodoro
-from src.modules.tasks_operations import TasksOperations
+from src.modules.tasks_operations import TasksOperations, TasksOperationsDep
 
 @dataclass
 class PomodoroOperations:
@@ -21,7 +21,7 @@ class PomodoroOperations:
         return pomodoro
     
     def stop_pomodoro(self, id: int) -> Pomodoro:
-        pomodoro = self.get_pomodoro(id)
+        pomodoro = self.get_pomodoro_by_id(id)
         if pomodoro is not None and pomodoro.completed == False:
             pomodoro.end_time = datetime.now()
             pomodoro.completed = True
@@ -47,7 +47,7 @@ class PomodoroOperations:
 
 
 
-def get_pomodoro_operations() -> PomodoroOperations:
-    return PomodoroOperations([])
+def get_pomodoro_operations(tasks_operations: TasksOperationsDep) -> PomodoroOperations:
+    return PomodoroOperations(tasks_operations)
 
 PomodoroOperationsDep = Annotated[PomodoroOperations, Depends(get_pomodoro_operations)]

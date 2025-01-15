@@ -10,7 +10,7 @@ class TaskStatus(str, Enum):
 class Task(BaseModel):
     id: int = Field(default=None)
     title: str = Field(min_length=3, max_length=100)
-    description: str = Field(default="", max_length=100)
+    description: str = Field(default="", max_length=300)
     status: TaskStatus = Field(default=TaskStatus.todo)
 
 
