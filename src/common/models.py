@@ -1,5 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel, Field
+from datetime import datetime, timedelta
 
 class TaskStatus(str, Enum):
     todo = "TODO"
@@ -13,9 +14,8 @@ class Task(BaseModel):
     status: TaskStatus = Field(default=TaskStatus.todo)
 
 
-
-# class Task(BaseModel):
-#     id: int = generate_id(list_of_tasks)
-#     title: Annotated[str, Query(min_length=3, max_length=100)]
-#     description: Annotated[str, Query(max_length=300)] | None = None
-#     status: TaskSatus = TaskSatus.TODO
+class Pomodoro(BaseModel):
+    task_id: int = Field()
+    start_time: datetime = Field(default=datetime.now())
+    end_time: datetime = Field(default=datetime.now() + timedelta(minutes=25))
+    completed: bool = Field(default=False)
