@@ -10,8 +10,6 @@ if os.getenv("ENVIRONMENT") == "development":
 else:
     DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Delete this later
-DATABASE_URL = "sqlite:///./database.db"
 engine = create_engine(DATABASE_URL)
 
 def get_session():
