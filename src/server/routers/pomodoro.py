@@ -8,14 +8,14 @@ router = APIRouter(prefix="/pomodoro")
 
 @router.get("/")
 def get_pomodoros(pomodoro_operations: PomodoroOperationsDep):
-    return pomodoro_operations.storage
+    return pomodoro_operations.db_storage.get_all(Pomodoro)
 
 
 @router.get("/stats")
 def get_pomodoro_stats(pomodoro_operations: PomodoroOperationsDep):
     completed_count = 0
     time = 0
-    for pomodoro in pomodoro_operations.storage:
+    for pomodoro in pomodoro_operations.db_storage.get_all(Pomodoro):
         if pomodoro.completed:
             completed_count += 1
             time += round((pomodoro.end_time - pomodoro.start_time).total_seconds() / 60, 2)
